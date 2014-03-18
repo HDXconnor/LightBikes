@@ -22,6 +22,10 @@ public class BikeTrail {
 		head = head.getNext();
 		return X;
 	}
+	
+	public void hideHead() {
+		head.hide();
+	}
 
 	public boolean empty() {
 		if (head == null){return true;}
