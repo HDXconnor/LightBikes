@@ -2,7 +2,8 @@ package LightCycles;
 
 public class ScreenBuffer {
 		  
-	public final static int BOOST = -1, SHIELD = -2, PACMAN = -3, TRAIL = -4, WALL = -5; 
+	public final static int BOOST = -1, SHIELD = -2, PACMAN = -3, NUKE = -4, TRAIL = -5, WALL = -6;
+	public final static int NUM_POWERS = 4;
 	private int [][] screen;
 	
 	
