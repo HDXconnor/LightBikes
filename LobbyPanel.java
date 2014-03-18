@@ -3,6 +3,7 @@ package LightCycles;
 import javax.swing.*;
 import java.awt.*;
 
+@SuppressWarnings("serial")
 public class LobbyPanel extends JPanel{
     
     public LobbyPanel() {
