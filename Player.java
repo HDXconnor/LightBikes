@@ -14,6 +14,7 @@ public class Player {
 	private int direction = RIGHT;
 	private boolean isLeavingTrail = false;
 	private int powers;
+	private int rowLimit, colLimit;
 
 	public Player(int rows, int cols, ArrayList<Point> freePool, ScreenBuffer image, int playerNum) {
 		powerUpLocation = null;
@@ -21,7 +22,8 @@ public class Player {
 		rand = new Random();
 		this.freePool = freePool;
 		this.image = image;
-		int rowLimit = rows - 1, colLimit = cols - 1;
+		this.rowLimit = rows - 1;
+		this.colLimit = cols - 1;
 		powers = 0;
 
 		for(int i = 1; i < rowLimit; i++) {
@@ -87,10 +89,17 @@ public class Player {
 		return finalizeMove(newPoint, isLeavingTrail);
 	}
 
-	public boolean handleCollisions(Point p) {
+	public boolean handleCollisions(Point p, boolean isLeavingTrail) {
 		if (image.isOccupied(p)); {
 			if (p.equals(powerUpLocation)) {
 				consumePowerUp();
+			} else if (image.isWall(p)) {
+				if (hasPacman()) {
+					if (p.getCol() == 0) {makeTrailSegment(new Point(p.getRow(), colLimit), isLeavingTrail); }
+					else if (p.getCol() == colLimit) {makeTrailSegment(new Point(p.getRow(), 0), isLeavingTrail);}
+					else if (p.getRow() == 0) {makeTrailSegment(new Point(rowLimit, p.getCol()), isLeavingTrail);}
+					else if (p.getRow() == rowLimit) {makeTrailSegment(new Point(0, p.getCol()), isLeavingTrail);}
+				}
 			} else {
 				if (hasShield()) {
 					TrailSegment toRemove = trail.getHead();
@@ -107,7 +116,7 @@ public class Player {
 	
 
 	public boolean finalizeMove(Point p, boolean isLeavingTrail) {
-		if(handleCollisions(p) == false) {return false;}
+		if(handleCollisions(p, isLeavingTrail) == false) {return false;}
 
 		makeTrailSegment(p, isLeavingTrail);
 		if (!isLeavingTrail) {freePool.add(p);}
