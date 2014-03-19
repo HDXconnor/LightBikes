@@ -1,4 +1,4 @@
-package panels;
+package LightCycles;
 
 import javax.swing.JPanel;
 
