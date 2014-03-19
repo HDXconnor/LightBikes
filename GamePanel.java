@@ -66,6 +66,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 	
 	private void sendPosData(int direction) {user.sendData(Integer.toString(direction) + players[0].getPosition().toString());}
 	private void sendTrailUpdate(boolean isLeavingTrail) {user.sendData(Boolean.toString(isLeavingTrail));}
+	private void sendPlayerDeath(int playerNum) {user.sendData("Dead:" + playerNum);}
 
 	public void keyPressed(KeyEvent ke) {
 		if(! playerAlive[0]) return;
@@ -118,7 +119,10 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 		for (int i = 0; i < numPlayers; i++) {
 			boolean isAlive = players[i].move();
 			if (isAlive) {numAlive++;}
-			else {playerAlive[i] = false;}
+			else {
+				playerAlive[i] = false;
+				//sendPlayerDeath(i);
+			}
 		}
 	}
 
