@@ -20,7 +20,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 	private Color playerColor;
 	private User user;
 
-	public GamePanel(User thisUser) {
+	public GamePanel() {
 		numRows = 60;
 		numCols = 90;
 		colWidth = rowHeight = 10;
@@ -28,8 +28,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 		setMinimumSize(new Dimension(900, 600));
 		setPreferredSize(new Dimension(900, 600));
 		setLayout(new GridBagLayout());
-		this.user = thisUser;
-
+		//this.user = thisUser;
 	}
 
 	public void GameManager(int numPlayers) {
@@ -76,19 +75,19 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 
 		if(kc == KeyEvent.VK_UP && direction != Player.DOWN) { 
 			players[0].setDirection(Player.UP);
-			sendPosData(Player.UP);
+			//sendPosData(Player.UP);
 		} else if(kc == KeyEvent.VK_DOWN  && direction != Player.UP) {
 			players[0].setDirection(Player.DOWN);
-			sendPosData(Player.DOWN);
+			//sendPosData(Player.DOWN);
 		} else if(kc == KeyEvent.VK_LEFT && direction != Player.RIGHT) {
 			players[0].setDirection(Player.LEFT);
-			sendPosData(Player.LEFT);
+			//sendPosData(Player.LEFT);
 		} else if(kc == KeyEvent.VK_RIGHT && direction != Player.LEFT) {
 			players[0].setDirection(Player.RIGHT);
-			sendPosData(Player.RIGHT);
+			//sendPosData(Player.RIGHT);
 		} else if(kc == KeyEvent.VK_SPACE) {
 			players[0].toggleTrail();
-			sendTrailUpdate(players[0].isLeavingTrail());
+			//sendTrailUpdate(players[0].isLeavingTrail());
 		} 
 
 		/*
@@ -170,4 +169,9 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 		g.setColor(Color.green); //initial color with no table choice
 		g.setColor(playerColor);
 	}
+	/*
+	public static void main(String[] args) {
+		new GamePanel().setVisible(true);
+	}
+	*/
 }
