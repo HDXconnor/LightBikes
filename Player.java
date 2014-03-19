@@ -29,7 +29,7 @@ public class Player {
 				makeFree(new Point(i, j));
 			}	
 		}		
-				
+
 		Point initialPosition = new Point(3 * playerNum + 3, 3 * playerNum + 3);
 		makeTrailSegment(initialPosition, true);
 
@@ -42,7 +42,7 @@ public class Player {
 	public void setShield() {powers = powers | Integer.parseInt("0100", 2);}
 	public void setPacman() {powers = powers | Integer.parseInt("0010", 2);}
 	public void setNuke() {powers = powers | Integer.parseInt("0001", 2);}
-	
+
 	public boolean hasBoost() {return (powers & Integer.parseInt("1000", 2)) > 0;}
 	public boolean hasShield() {return (powers & Integer.parseInt("0100", 2)) > 0;}
 	public boolean hasPacman() {return (powers & Integer.parseInt("0010", 2)) > 0;}
@@ -52,7 +52,7 @@ public class Player {
 	public void removeShield() {powers = powers & Integer.parseInt("1011", 2);}
 	public void removePacman() {powers = powers & Integer.parseInt("1101", 2);}
 	public void removeNuke() {powers = powers & Integer.parseInt("1110", 2);}
-	
+
 	public void gainPower() {
 		if (powerUpValue == 1) {setBoost();}
 		else if (powerUpValue == 2) {setShield();}
@@ -60,20 +60,20 @@ public class Player {
 		else if (powerUpValue == 4) {setNuke();}
 		printPowers();
 	}
-	
+
 	public void setDirection(int direction) {this.direction = direction;}
 	public int getDirection() {return direction;}
 	public void toggleTrail() {isLeavingTrail = !isLeavingTrail; makeFree(trail.getHead().getPoint());}
 	public void leaveTrail(boolean isLeavingTrail) {this.isLeavingTrail = isLeavingTrail;}
 	public boolean isLeavingTrail() {return isLeavingTrail;}
-	
-	
+
+
 	public BikeTrail getBikeTrail() { return trail; }
 	public int getPowerUpValue() { return powerUpValue; }
 	public Point getPowerUpLocation() { return powerUpLocation; }
 	public int getAPowerUpValue() {return Math.abs(rand.nextInt(ScreenBuffer.NUM_POWERS)) + 1;}
 	public int getAnIdxValue(int max) {return Math.abs(rand.nextInt(max));}
-	
+
 	public Point getPosition() {return trail.getHead().getPoint();}
 
 	public boolean move() {
@@ -83,12 +83,12 @@ public class Player {
 		else if (direction == DOWN){newPoint = new Point(head.getRow() + 1, head.getCol());}
 		else if (direction == LEFT){newPoint = new Point(head.getRow(), head.getCol() - 1);}
 		else if (direction == RIGHT){newPoint = new Point(head.getRow(), head.getCol() + 1);}
-		
+
 		return finalizeMove(newPoint, isLeavingTrail);
 	}
-  
-	public boolean finalizeMove(Point p, boolean isLeavingTrail) {
-		if(image.isOccupied(p)) {
+
+	public boolean handleCollisions(Point p) {
+		if (image.isOccupied(p)); {
 			if (p.equals(powerUpLocation)) {
 				consumePowerUp();
 			} else {
@@ -102,10 +102,16 @@ public class Player {
 				}
 			}
 		}
-		
+		return true;
+	}
+	
+
+	public boolean finalizeMove(Point p, boolean isLeavingTrail) {
+		if(handleCollisions(p) == false) {return false;}
+
 		makeTrailSegment(p, isLeavingTrail);
 		if (!isLeavingTrail) {freePool.add(p);}
-		
+
 		if (p.equals(powerUpLocation)){consumePowerUp();}
 
 		return true;
@@ -117,16 +123,16 @@ public class Player {
 		powerUpLocation = (Point)freePool.get(getAnIdxValue(freePool.size()));
 		image.setValueAt(powerUpLocation, -powerUpValue);
 	}
-	
+
 	private void makeFree(Point p) {
 		freePool.add(p);
 		image.setValueAt(p, endOfPool());
 	}
-  
+
 	private int endOfPool() {
 		return freePool.size() - 1;
 	}
-	
+
 	private void makeTrailSegment(Point p, boolean isLeavingTrail) { 
 		TrailSegment temp = new TrailSegment(p);
 		trail.addToHead(temp, isLeavingTrail);
@@ -134,8 +140,8 @@ public class Player {
 		freePool.set(endOfPool(), temp.getPoint());
 		freePool.remove(endOfPool());
 		image.setValueAt(p, ScreenBuffer.TRAIL);
-    }
-	
+	}
+
 	private void printPowers() {
 		if (hasBoost()) {System.out.println("boost");}
 		if (hasShield()) {System.out.println("shield");}
