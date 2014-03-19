@@ -90,7 +90,7 @@ public class Player {
 	}
 
 	public boolean handleCollisions(Point p, boolean isLeavingTrail) {
-		if (image.isOccupied(p)); {
+		if (image.isOccupied(p)) {
 			if (p.equals(powerUpLocation)) {
 				consumePowerUp();
 			} else if (image.isWall(p)) {
