@@ -65,6 +65,7 @@ public class Player {
 	public int getDirection() {return direction;}
 	public void toggleTrail() {isLeavingTrail = !isLeavingTrail; makeFree(trail.getHead().getPoint());}
 	public void leaveTrail(boolean isLeavingTrail) {this.isLeavingTrail = isLeavingTrail;}
+	public boolean isLeavingTrail() {return isLeavingTrail;}
 	
 	
 	public BikeTrail getBikeTrail() { return trail; }
@@ -72,6 +73,8 @@ public class Player {
 	public Point getPowerUpLocation() { return powerUpLocation; }
 	public int getAPowerUpValue() {return Math.abs(rand.nextInt(ScreenBuffer.NUM_POWERS)) + 1;}
 	public int getAnIdxValue(int max) {return Math.abs(rand.nextInt(max));}
+	
+	public Point getPosition() {return trail.getHead().getPoint();}
 
 	public boolean move() {
 		TrailSegment head = trail.getHead();
