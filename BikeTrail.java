@@ -31,9 +31,9 @@ public class BikeTrail {
 		if (head == null){return true;}
 		return false;
 	}
+	
 	public TrailSegment getHead() {return tail;}
-
-
+	
 	public void start() {iter = head;}
 
 	public TrailSegment nextElement() {
