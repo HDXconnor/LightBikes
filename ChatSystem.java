@@ -1,4 +1,4 @@
-package LightCycles;
+package game;
 
 public class ChatSystem {
 
