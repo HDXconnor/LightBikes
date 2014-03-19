@@ -1,4 +1,4 @@
-package LightCycles;
+package game;
 
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -7,10 +7,11 @@ import java.awt.*;
 public class MyTableModel extends DefaultTableModel {
     Color purple = new Color(153,0,204);
     Color orange = new Color(255,153,0);
-    Object data[][] = { { "Red", Color.RED }, { "Orange", orange },
+    Color mag = new Color(255,0,153);
+    Object data[][] = { { "Red", Color.RED },{ "Blue", Color.cyan },
             { "Purple", purple }, { "Green", Color.GREEN },
-            { "Blue", Color.BLUE }, { "Magenta", Color.MAGENTA },
-            { "Yellow", Color.yellow }, { "White", Color.white }
+            { "Orange", orange }, { "Magenta", mag },
+            { "Yellow", Color.yellow }
     };
 
     @Override
@@ -18,7 +19,7 @@ public class MyTableModel extends DefaultTableModel {
         return false;
     }
 
-    MyTableModel() {
+    public MyTableModel() {
         setColumnIdentifiers(new String[] {"Name", "Color" });
         for (int i = 0, n = data.length; i < n; i++)
             addRow(new Object[] {  data[i][0],
